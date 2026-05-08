@@ -1,6 +1,8 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, status
+from fastapi.responses import JSONResponse
 
 from app.config import settings
+from app.database import check_database_connection
 
 app = FastAPI(
     title=settings.app_name,
@@ -18,8 +20,22 @@ def root():
 
 @app.get("/health")
 def health_check():
+    database_ok = check_database_connection()
+
+    if not database_ok:
+        return JSONResponse(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            content={
+                "status": "error",
+                "service": settings.app_name,
+                "environment": settings.app_env,
+                "database": "unavailable",
+            },
+        )
+
     return {
         "status": "ok",
         "service": settings.app_name,
         "environment": settings.app_env,
+        "database": "ok",
     }

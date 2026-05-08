@@ -1,13 +1,20 @@
-# Docker Compose will be implemented in a later phase.
-# This file is intentionally kept as a placeholder for now.
-#
-# Planned services:
-# - frontend
-# - backend
-# - postgres
-# - reverse-proxy
-# - prometheus
-# - grafana
-#
-# We do not add real service definitions yet because the application code
-# has not been created. This keeps the repository clean and honest.
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: cabins-postgres
+    environment:
+      POSTGRES_DB: cabins_db
+      POSTGRES_USER: cabins_app
+      POSTGRES_PASSWORD: cabins_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - cabins_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cabins_app -d cabins_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  cabins_postgres_data:
