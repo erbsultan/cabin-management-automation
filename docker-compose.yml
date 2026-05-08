@@ -1,0 +1,13 @@
+# Docker Compose will be implemented in a later phase.
+# This file is intentionally kept as a placeholder for now.
+#
+# Planned services:
+# - frontend
+# - backend
+# - postgres
+# - reverse-proxy
+# - prometheus
+# - grafana
+#
+# We do not add real service definitions yet because the application code
+# has not been created. This keeps the repository clean and honest.
