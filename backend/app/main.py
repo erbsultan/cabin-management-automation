@@ -1,6 +1,7 @@
 from fastapi import FastAPI, status
 from fastapi.responses import JSONResponse
 
+from app.api.cabins import router as cabins_router
 from app.config import settings
 from app.database import check_database_connection
 
@@ -8,6 +9,8 @@ app = FastAPI(
     title=settings.app_name,
     version="0.1.0",
 )
+
+app.include_router(cabins_router)
 
 
 @app.get("/")
