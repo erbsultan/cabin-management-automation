@@ -2,6 +2,7 @@ from fastapi import FastAPI, status
 from fastapi.responses import JSONResponse
 
 from app.api.cabins import router as cabins_router
+from app.api.students import router as students_router
 from app.config import settings
 from app.database import check_database_connection
 
@@ -11,7 +12,7 @@ app = FastAPI(
 )
 
 app.include_router(cabins_router)
-
+app.include_router(students_router)
 
 @app.get("/")
 def root():
